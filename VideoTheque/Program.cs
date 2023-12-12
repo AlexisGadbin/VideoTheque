@@ -2,11 +2,13 @@ using Microsoft.AspNetCore.Http.Json;
 using Microsoft.OpenApi.Models;
 using VideoTheque.Businesses.AgeRatings;
 using VideoTheque.Businesses.Genres;
+using VideoTheque.Businesses.Personnes;
 using VideoTheque.Businesses.Supports;
 using VideoTheque.Context;
 using VideoTheque.Core;
 using VideoTheque.Repositories.AgeRatings;
 using VideoTheque.Repositories.Genres;
+using VideoTheque.Repositories.Personnes;
 using VideoTheque.Repositories.Supports;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -32,6 +34,9 @@ builder.Services.AddScoped(typeof(IAgeRatingsBusiness), typeof(AgeRatingBusiness
 
 builder.Services.AddScoped(typeof(ISupportsRepository), typeof(SupportsRepository));
 builder.Services.AddScoped(typeof(ISupportsBusiness), typeof(SupportsBusiness));
+
+builder.Services.AddScoped(typeof(IPersonnesRepository), typeof(PersonnesRepository));
+builder.Services.AddScoped(typeof(IPersonnesBusiness), typeof(PersonnesBusiness));
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

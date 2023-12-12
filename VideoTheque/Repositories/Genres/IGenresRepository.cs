@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
-using VideoTheque.DTOs;
+﻿using VideoTheque.DTOs;
 
 namespace VideoTheque.Repositories.Genres
 {
