@@ -52,12 +52,33 @@ namespace VideoTheque.Controllers
             return films.Adapt<List<FilmViewModel>>(_config);
         }
 
+        [HttpGet("{id}")]
+        public FilmViewModel GetFilm(int id)
+        {
+            var film = _filmsBusiness.GetFilm(id);
+            return film.Adapt<FilmViewModel>(_config);
+        }
+
         [HttpPost]
         public async Task<IResult> InsertFilm([FromBody] FilmViewModel film)
         {
             var created = _filmsBusiness.InsertFilm(film.Adapt<FilmDto>(_config));
 
             return Results.Created($"/hosts/{created.Id}", created.Adapt<FilmViewModel>(_config));
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IResult> UpdateFilm([FromRoute] int id, [FromBody] FilmViewModel film)
+        {
+            _filmsBusiness.UpdateFilm(id, film.Adapt<FilmDto>(_config));
+            return Results.NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IResult> DeleteFilm([FromRoute] int id)
+        {
+            _filmsBusiness.DeleteFilm(id);
+            return Results.Ok();
         }
     }
 }
