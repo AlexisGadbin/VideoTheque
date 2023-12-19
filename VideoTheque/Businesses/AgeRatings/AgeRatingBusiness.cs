@@ -30,6 +30,18 @@ namespace VideoTheque.Businesses.AgeRatings
             return ageRating;
         }
 
+        public AgeRatingDto GetAgeRating(string name)
+        {
+            var ageRating = _ageRatingsDao.GetAgeRating(name).Result;
+
+            if (ageRating is null)
+            {
+                throw new NotFoundException($"Age rating with name {name} not found");
+            }
+
+            return ageRating;
+        }
+
         public AgeRatingDto InsertAgeRating(AgeRatingDto ageRating)
         {
             if(_ageRatingsDao.InsertAgeRating(ageRating).IsFaulted)

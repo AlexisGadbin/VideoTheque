@@ -23,6 +23,11 @@ namespace VideoTheque.Repositories.Personnes
            return _db.Personnes.FindAsync(id);
         }
 
+        public Task<PersonneDto?> GetPersonne(string firstName, string lastName)
+        {
+            return _db.Personnes.FirstOrDefaultAsync(p => p.FirstName == firstName && p.LastName == lastName);
+        }
+
         public Task InsertPersonne(PersonneDto personne)
         {
             _db.Personnes.Add(personne);
