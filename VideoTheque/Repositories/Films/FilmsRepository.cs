@@ -18,5 +18,11 @@ namespace VideoTheque.Repositories.Films
         {
             return _db.BluRays.ToListAsync();
         }
+
+        public Task InsertFilm(BluRayDto film)
+        {
+            _db.BluRays.Add(film);
+            return _db.SaveChangesAsync();
+        }
     }
 }
