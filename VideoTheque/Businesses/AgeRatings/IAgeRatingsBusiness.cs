@@ -6,6 +6,8 @@ namespace VideoTheque.Businesses.AgeRatings
     {
         Task<List<AgeRatingDto>> GetAgeRatings();
         AgeRatingDto GetAgeRating(int id);
+
+        AgeRatingDto GetAgeRating(string name);
         AgeRatingDto InsertAgeRating(AgeRatingDto ageRating);
         void UpdateAgeRating(int id, AgeRatingDto ageRating);
         void DeleteAgeRating(int id);

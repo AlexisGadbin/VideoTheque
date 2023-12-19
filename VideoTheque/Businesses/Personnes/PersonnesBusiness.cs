@@ -29,6 +29,18 @@ namespace VideoTheque.Businesses.Personnes
             return ageRating;
         }
 
+        public PersonneDto GetPersonne(string firstName, string lastName)
+        {
+            var ageRating = _personnesDao.GetPersonne(firstName, lastName).Result;
+
+            if(ageRating is null)
+            {
+                throw new NotFoundException($"Personne with name {firstName} {lastName} not found");
+            }
+
+            return ageRating;
+        }
+
         public PersonneDto InsertPersonne(PersonneDto personne)
         {
             if(_personnesDao.InsertPersonne(personne).IsFaulted)

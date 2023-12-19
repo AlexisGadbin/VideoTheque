@@ -1,4 +1,5 @@
-﻿using VideoTheque.DTOs;
+﻿using VideoTheque.Core;
+using VideoTheque.DTOs;
 using VideoTheque.Repositories.AgeRatings;
 using VideoTheque.Repositories.Films;
 using VideoTheque.Repositories.Genres;
@@ -52,6 +53,26 @@ namespace VideoTheque.Businesses.Films
 
             return films;
 
+        }
+
+        public FilmDto InsertFilm(FilmDto film)
+        {
+            BluRayDto bluRay = new BluRayDto();
+            bluRay.Title = film.Title;
+            bluRay.Duration = film.Duration;
+
+            bluRay.IdFirstActor = _personneDao.GetPersonne(film.FirstActor.FirstName, film.FirstActor.LastName).Result.Id;
+            bluRay.IdDirector = _personneDao.GetPersonne(film.Director.FirstName, film.Director.LastName).Result.Id;
+            bluRay.IdScenarist = _personneDao.GetPersonne(film.Scenarist.FirstName, film.Scenarist.LastName).Result.Id;
+            bluRay.IdAgeRating = _ageRatingDao.GetAgeRating(film.AgeRating.Name).Result.Id;
+            bluRay.IdGenre = _genreDao.GetGenre(film.Genre.Name).Result.Id;
+
+            if (_filmDao.InsertFilm(bluRay).IsFaulted)
+            {
+                throw new InternalErrorException($"Error while inserting film : {film.Title}");
+            }
+
+            return film;
         }
     }
 }
