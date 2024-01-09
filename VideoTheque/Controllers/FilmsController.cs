@@ -43,6 +43,9 @@ namespace VideoTheque.Controllers
                 .Map(dest => dest.AgeRating, src => new AgeRatingDto { Name = src.AgeRating })
                 .Map(dest => dest.Genre, src => new GenreDto { Name = src.Genre })
                 .Map(dest => dest.Support, src => new SupportDto { Name = src.Support });
+
+            _config.ForType<PersonneDto, PersonneViewModel>()
+                        .Map(dest => dest.FullName, src => $"{src.FirstName} {src.LastName}");
         }
 
         [HttpGet]
@@ -53,7 +56,7 @@ namespace VideoTheque.Controllers
         }
 
         [HttpGet("{id}")]
-        public FilmViewModel GetFilm(int id)
+        public FilmViewModel GetFilm([FromRoute] int id)
         {
             var film = _filmsBusiness.GetFilm(id);
             return film.Adapt<FilmViewModel>(_config);
@@ -78,6 +81,30 @@ namespace VideoTheque.Controllers
         public async Task<IResult> DeleteFilm([FromRoute] int id)
         {
             _filmsBusiness.DeleteFilm(id);
+            return Results.Ok();
+        }
+
+        [HttpGet("empruntables")]
+        public List<EmpruntableViewModel> GetFilmsEmpruntables()
+        {
+            var films = _filmsBusiness.GetFilmsEmpruntables();
+
+            return films.Adapt<List<EmpruntableViewModel>>(_config);
+        }
+
+        [HttpPost("empruntables/{id}")]
+        public async Task<EmpruntViewModel> EmpruntFilm([FromRoute]  int id)
+        {
+            var emprunt = _filmsBusiness.EmpruntFilm(id);
+
+            return emprunt.Adapt<EmpruntViewModel>(_config);
+        }
+
+        [HttpDelete("empruntables/{titre}")]
+        public async Task<IResult> RetourFilm([FromRoute] string titre)
+        {
+            _filmsBusiness.RetourFilm(titre);
+
             return Results.Ok();
         }
     }

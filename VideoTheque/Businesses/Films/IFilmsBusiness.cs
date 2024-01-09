@@ -13,5 +13,9 @@ namespace VideoTheque.Businesses.Films
         void UpdateFilm(int id, FilmDto film);
 
         void DeleteFilm(int id);
+
+        List<EmpruntableDto> GetFilmsEmpruntables();
+        EmpruntDto EmpruntFilm(int id);
+        void RetourFilm(String titre);
     }
 }

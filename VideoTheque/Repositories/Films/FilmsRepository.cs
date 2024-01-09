@@ -24,6 +24,11 @@ namespace VideoTheque.Repositories.Films
             return _db.BluRays.FindAsync(id);
         }
 
+        public Task<BluRayDto?> GetFilmByTitle(string title)
+        {
+            return _db.BluRays.FirstOrDefaultAsync(f => f.Title == title);
+        }
+
         public Task InsertFilm(BluRayDto film)
         {
             _db.BluRays.Add(film);
